@@ -1,0 +1,53 @@
+{
+  "name": "learn-rsc",
+  "version": "0.0.1",
+  "description": "A non-production RSC implementation made for learning",
+  "type": "module",
+  "scripts": {
+    "dev": "NODE_OPTIONS='-C react-server' nodemon --exec \"pnpm run dev:server\" --watch . -e ts,tsx",
+    "dev:server": "pnpm node compile.js && pnpm node .learn-rsc/bundler/server.js"
+  },
+  "keywords": [],
+  "author": "Ryan Toronto",
+  "license": "ISC",
+  "engines": {
+    "node": ">=20.9.0"
+  },
+  "devDependencies": {
+    "@types/babel__core": "^7.20.5",
+    "@types/estree": "^1.0.5",
+    "@types/node": "^20.10.2",
+    "@types/react": "^18.2.41",
+    "@types/react-dom": "^18.2.17",
+    "@typescript-eslint/eslint-plugin": "^6.19.0",
+    "@typescript-eslint/parser": "^6.19.0",
+    "eslint": "^8.56.0",
+    "eslint-plugin-react": "^7.33.2",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "nodemon": "^3.0.3",
+    "prettier": "^3.2.5",
+    "prettier-plugin-tailwindcss": "^0.5.11",
+    "typescript": "^5.2.2"
+  },
+  "peerDependencies": {
+    "react": "18.3.0-canary-4b2a1115a-20240202",
+    "react-dom": "18.3.0-canary-4b2a1115a-20240202",
+    "tailwindcss": ">=3.3.3"
+  },
+  "dependencies": {
+    "@babel/core": "^7.23.9",
+    "@hattip/adapter-node": "^0.0.35",
+    "@hattip/headers": "^0.0.35",
+    "@hattip/response": "^0.0.35",
+    "@hattip/router": "^0.0.35",
+    "acorn": "^8.11.3",
+    "acorn-walk": "^8.3.2",
+    "astring": "^1.8.6",
+    "autoprefixer": "^10.4.16",
+    "esbuild": "0.20.0",
+    "postcss": "^8.4.32",
+    "postcss-load-config": "^4.0.1",
+    "react-server-dom-webpack": "18.3.0-canary-4b2a1115a-20240202",
+    "server-only": "^0.0.1"
+  }
+}
