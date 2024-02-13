@@ -94,6 +94,14 @@ export async function buildAll() {
                 sourceType: "module",
               });
 
+              let importStatement = `import { registerServerReference } from "react-server-dom-webpack/server.edge";`;
+              let importNode = acorn.parse(importStatement, {
+                ecmaVersion: "latest",
+                sourceType: "module",
+              });
+
+              ast.body.unshift(...importNode.body);
+
               acornWalk.ancestor(ast, {
                 FunctionDeclaration(_node, _, ancestors) {
                   let node = _node as unknown as FunctionDeclaration;
@@ -124,13 +132,7 @@ export async function buildAll() {
                   throw new Error(`No name found for action in file: ${path}`);
                 }
 
-                let id = `${moduleId}#${name}`;
-
-                let referenceCode = `
-                ${name}.$$typeof = Symbol.for("react.server.reference");
-                ${name}.$$id = "${id}";
-                ${name}.$$bound = null;
-                `;
+                let registerCode = `registerServerReference(${name}, "${moduleId}", "${name}");`;
 
                 serverActions.add({
                   moduleId,
@@ -138,7 +140,7 @@ export async function buildAll() {
                   export: name,
                 });
 
-                let tree = acorn.parse(referenceCode, {
+                let tree = acorn.parse(registerCode, {
                   ecmaVersion: "latest",
                 });
 
