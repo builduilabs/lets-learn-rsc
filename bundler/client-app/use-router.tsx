@@ -1,11 +1,11 @@
 import { ReactNode, createContext, useContext } from "react";
 
 type Routing = {
-  push: (path: string) => void;
+  navigate: (path: string) => void;
 };
 
 let Context = createContext<Routing>({
-  push: () => {},
+  navigate: () => {},
 });
 
 export function useRouter() {
@@ -13,11 +13,11 @@ export function useRouter() {
 }
 
 export function RouterProvider({
-  push,
+  navigate,
   children,
 }: {
-  push: (path: string) => void;
+  navigate: (path: string) => void;
   children: ReactNode;
 }) {
-  return <Context.Provider value={{ push }}>{children}</Context.Provider>;
+  return <Context.Provider value={{ navigate }}>{children}</Context.Provider>;
 }

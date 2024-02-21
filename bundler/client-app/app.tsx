@@ -2,7 +2,6 @@ import "./webpack-apis";
 import {
   Dispatch,
   SetStateAction,
-  Suspense,
   startTransition,
   use,
   useEffect,
@@ -30,7 +29,7 @@ export function App() {
   let [path, setPath] = useState(url.pathname);
   let [cache, setCache] = useState(initialCache);
 
-  function push(path: string) {
+  function navigate(path: string) {
     startTransition(() => {
       setCache((cache) => {
         let newCache = new Map(cache);
@@ -38,8 +37,24 @@ export function App() {
         return newCache;
       });
       setPath(path);
+
+      window.history.pushState({}, "", path);
+      document.documentElement.scrollTop = 0;
     });
   }
+
+  useEffect(() => {
+    function onPopState(_event: PopStateEvent) {
+      startTransition(() => {
+        setPath(location.pathname);
+      });
+    }
+
+    window.addEventListener("popstate", onPopState);
+    return () => {
+      window.removeEventListener("popstate", onPopState);
+    };
+  }, []);
 
   useEffect(() => {
     update.setCache = setCache;
@@ -65,7 +80,9 @@ export function App() {
 
   let serverOutput = cache.get(path);
 
-  return <RouterProvider push={push}>{use(serverOutput)}</RouterProvider>;
+  return (
+    <RouterProvider navigate={navigate}>{use(serverOutput)}</RouterProvider>
+  );
 }
 
 async function callServer(id: string, args: unknown) {

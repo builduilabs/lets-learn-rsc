@@ -1,7 +1,6 @@
 # TODO
 
-Link needs to update url
-Streaming + Async components
+Shiki
 
 Guides
 Client components

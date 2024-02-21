@@ -10,12 +10,12 @@ export default function Link({
   href: string;
   children: string;
 }) {
-  let { push } = useRouter();
+  let { navigate } = useRouter();
 
   function handleClick(e: MouseEvent<HTMLAnchorElement>) {
     if (e.button === 0 && !e.ctrlKey && !e.metaKey) {
       e.preventDefault();
-      push(href);
+      navigate(href);
     }
   }
 

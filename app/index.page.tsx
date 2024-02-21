@@ -1,7 +1,8 @@
 export default async function Page() {
   return (
-    <div>
-      <h1>I am a Server Component</h1>
+    <div className="prose">
+      <h1>Let's learn RSC</h1>
+      <p>Test test</p>
     </div>
   );
 }
